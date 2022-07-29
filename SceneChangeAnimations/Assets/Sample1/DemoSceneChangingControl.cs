@@ -20,7 +20,13 @@ public class DemoSceneChangingControl : MonoBehaviour
     public void Start()
     {
         UIDocument uiDocument = FindObjectOfType<UIDocument>();
+
         Button button = uiDocument.rootVisualElement.Q<Button>();
+
+        // Change something in the scene,
+        // to see that this change is part of the "screenshot" and will be animated away.
+        button.style.unityTextAlign = new StyleEnum<TextAnchor>(TextAnchor.MiddleLeft);
+
         button.RegisterCallback<ClickEvent>(evt =>
         {
             sceneChangeAnimationControl.AnimateChangeToScene(

@@ -330,6 +330,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelSettings: {fileID: 11400000, guid: 58aa41adc21cb90428f8984e5735ddea, type: 2}
+  setMainCameraClearFlags: 1
+  visualElementPickingMode: 1
 --- !u!4 &2000009787
 Transform:
   m_ObjectHideFlags: 0

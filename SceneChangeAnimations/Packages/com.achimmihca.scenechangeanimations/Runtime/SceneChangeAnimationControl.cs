@@ -9,6 +9,14 @@ namespace SceneChangeAnimations
     public class SceneChangeAnimationControl : MonoBehaviour
     {
         public PanelSettings panelSettings;
+        public bool setMainCameraClearFlags = true;
+
+        // By default, it is possible to click through the "screenshot" VisualElement.
+        public PickingMode visualElementPickingMode = PickingMode.Ignore;
+
+        // The method used to find a UIDocument in the scene.
+        public Func<UIDocument> findUIDocumentFunction = DefaultFindUIDocumentFunction;
+
         private RenderTexture renderTexture;
         private Texture2D texture2D;
 
@@ -16,22 +24,17 @@ namespace SceneChangeAnimations
 
         private Action<VisualElement> animateVisualElementAction;
 
-        // By default click through the "screenshot" VisualElement.
-        public PickingMode VisualElementPickingMode { get; set; } = PickingMode.Ignore;
-
-        public Func<UIDocument> FindUIDocumentFunction { get; set; }= DefaultFindUIDocumentFunction;
-
-        public void OnEnable()
+        public virtual void OnEnable()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
-        public void OnDisable()
+        public virtual void OnDisable()
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
-        public void Start()
+        public virtual void Start()
         {
             // Init single instance
             var sceneChangeAnimationControls = FindObjectsOfType<SceneChangeAnimationControl>();
@@ -53,18 +56,26 @@ namespace SceneChangeAnimations
             Action doLoadSceneAction,
             Action<VisualElement> doAnimateVisualElementAction = null)
         {
-            this.animateVisualElementAction = doAnimateVisualElementAction;
+            animateVisualElementAction = doAnimateVisualElementAction;
 
             // Take "screenshot" of "old" scene.
-            // Therefor, copy the UIDocument but with different PanelSettings that render to texture.
-            UIDocument uiDocumentOriginal = FindUIDocumentFunction();
-            UIDocument uiDocumentCopy = Instantiate(uiDocumentOriginal);
-            uiDocumentCopy.panelSettings = panelSettings;
-            hasRenderedTexture = true;
+            // Therefor, use the PanelSettings that render to texture.
+            UIDocument uiDocument = findUIDocumentFunction();
+            uiDocument.panelSettings = panelSettings;
+
+            if (setMainCameraClearFlags
+                && Camera.main != null)
+            {
+                // Do not clear the background or the user will see a blank screen for once frame,
+                // when the UIDocument is rendered to the RenderTexture.
+                Camera.main.clearFlags = CameraClearFlags.Nothing;
+            }
 
             // Unity needs one additional frame to render to the texture
             // See https://forum.unity.com/threads/force-render-ui-or-getting-event-for-rendered-ui.1263884/
             StartCoroutine(WaitForFramesThenDo(2, doLoadSceneAction));
+
+            hasRenderedTexture = true;
         }
 
         private VisualElement CreateRenderTextureVisualElement()
@@ -82,26 +93,26 @@ namespace SceneChangeAnimations
             visualElement.style.position = new StyleEnum<Position>(Position.Absolute);
             visualElement.style.width = new StyleLength(new Length(100, LengthUnit.Percent));
             visualElement.style.height = new StyleLength(new Length(100, LengthUnit.Percent));
-            visualElement.pickingMode = VisualElementPickingMode;
+            visualElement.pickingMode = visualElementPickingMode;
             return visualElement;
         }
 
-        private VisualElement AppendRenderTextureVisualElement()
+        private VisualElement AppendRenderTextureVisualElement(UIDocument uiDocument)
         {
             VisualElement visualElement = CreateRenderTextureVisualElement();
-            UIDocument uiDocument = FindUIDocumentFunction();
             uiDocument.rootVisualElement.Add(visualElement);
             return visualElement;
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+        protected virtual void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
             if (!hasRenderedTexture)
             {
                 return;
             }
 
-            VisualElement visualElement = AppendRenderTextureVisualElement();
+            UIDocument newSceneUIDocument = findUIDocumentFunction();
+            VisualElement visualElement = AppendRenderTextureVisualElement(newSceneUIDocument);
             if (animateVisualElementAction != null)
             {
                 animateVisualElementAction(visualElement);
@@ -112,7 +123,7 @@ namespace SceneChangeAnimations
             }
         }
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             // Free dynamically created texture.
             Destroy(renderTexture);
