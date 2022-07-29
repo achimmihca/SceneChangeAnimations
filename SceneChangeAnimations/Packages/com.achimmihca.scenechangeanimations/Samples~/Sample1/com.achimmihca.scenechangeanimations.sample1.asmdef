@@ -1,0 +1,15 @@
+{
+	"name": "com.achimmihca.scenechangeanimations.sample1",
+	"references": [
+		"com.achimmihca.scenechangeanimations"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

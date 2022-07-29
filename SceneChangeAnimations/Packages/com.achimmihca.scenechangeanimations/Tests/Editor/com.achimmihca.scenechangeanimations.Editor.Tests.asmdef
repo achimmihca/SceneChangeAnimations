@@ -1,0 +1,21 @@
+{
+    "name": "com.achimmihca.scenechangeanimations.Editor.Tests",
+    "references": [
+		"com.achimmihca.scenechangeanimations",
+		"com.achimmihca.scenechangeanimations.Editor"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

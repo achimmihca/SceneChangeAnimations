@@ -1,0 +1,17 @@
+{
+    "name": "com.achimmihca.scenechangeanimations.Editor",
+    "references": [
+		"com.achimmihca.scenechangeanimations"
+    ],
+    "includePlatforms": [
+		"Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

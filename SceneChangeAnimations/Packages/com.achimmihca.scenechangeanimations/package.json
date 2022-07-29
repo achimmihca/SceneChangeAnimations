@@ -1,0 +1,25 @@
+{
+  "name": "com.achimmihca.scenechangeanimations",
+  "version": "1.0.0",
+  "displayName": "Scene Change Animations",
+  "description": "Scene Change Animations for UIToolkit",
+  "keywords": [
+    "scene change",
+    "animation",
+    "scene transition",
+    "scene load"
+  ],
+  "author": {
+    "name": "Andreas Stange",
+    "email": "anst.dev@gmail.com",
+    "url": "https://github.com/achimmihca/SceneChangeAnimations"
+  },
+  "samples": [
+    {
+      "displayName": "Sample1",
+      "description": "Scene change animation demo",
+      "path": "Samples~/Sample1"
+    }
+  ],
+  "type": "library"
+}
