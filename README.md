@@ -29,7 +29,7 @@ private void ChangeScene()
 
 private void StartFadeOutAnimation(VisualElement visualElement)
 {
-    // Example animation using coroutine. Could also use LeanTween other libraries here.
+    // Example animation using coroutine. Could also use LeanTween or other libraries here.
     sceneChangeAnimationControl.StartCoroutine(FadeOut(visualElement));
 }
 
