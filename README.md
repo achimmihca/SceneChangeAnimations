@@ -61,3 +61,6 @@ See also the [Unity forums](https://forum.unity.com/threads/scene-transition-ani
 
 Note that this approach should also work to animate the change from one UXML file to another on a UIDocument in a 3D scene.
 However, the current implementation of this package only covers the use case of scene changes for 2D apps with a single UIDocument in it.
+
+# History
+This project has been created originally for [UltraStar Play](usplay.net). If you like singing along your favorite songs then go check it out ;)
