@@ -30,9 +30,6 @@ private void ChangeScene()
 private void StartFadeOutAnimation(VisualElement visualElement)
 {
     // Example animation using coroutine. Could also use LeanTween other something else here.
-
-    // When using coroutines, must start animation on GameObject that uses DontDestroyOnLoad such as the sceneChangeAnimationControl.
-    // Otherwise the coroutine will not survive the scene change.
     sceneChangeAnimationControl.StartCoroutine(FadeOut(visualElement));
 }
 
@@ -57,11 +54,10 @@ private static IEnumerator FadeOut(VisualElement visualElement)
 Taking the "screenshot":
 - A `RenderTexture` is created with the same size of the screen (`Screen.width`, `Screen.height`).
 - The RenderTexture is used as `targetTexture` of a `PanelSettings` object.
-- The original `UIDocument` in the scene is copied, but using the PanelSettings with the RenderTexture.
+- The `UIDocument` in the scene is set to use the `PanelSettings` with the RenderTexture.
     - Thus, the RenderTexture holds a "screenshot" of the UIDocument
 
 See also the [Unity forums](https://forum.unity.com/threads/scene-transition-animation.1308786/) where this approach had been discussed.
 
-Note that this approach should also work to transition between any UIDocument source asset changes (no scene change needed).
-For example, you could use it to animate the change from one UXML file to another on a UIDocument in a 3D scene.
-However, the current implementation of this package does not cover this.
+Note that this approach should also work to animate the change from one UXML file to another on a UIDocument in a 3D scene.
+However, the current implementation of this package only covers the use case of scene changes for 2D apps with a single UIDocument in it.
