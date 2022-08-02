@@ -63,4 +63,4 @@ Note that this approach should also work to animate the change from one UXML fil
 However, the current implementation of this package only covers the use case of scene changes for 2D apps with a single UIDocument in it.
 
 # History
-This project has been created originally for [UltraStar Play](usplay.net). If you like singing along your favorite songs then go check it out ;)
+This project has been created originally for [UltraStar Play](https://usplay.net/). If you like singing along your favorite songs then go check it out ;)
